@@ -1,9 +1,7 @@
 <?php
+require_once __DIR__ . "/HtmlElement.php";
 
-require_once "/HtmlElement.php";
-
-
-class Form extends HtmlElement{
+class Form extends HtmlElement {
     public string $action;
     public string $method;
 
@@ -13,7 +11,7 @@ class Form extends HtmlElement{
     }
 
     /**
-     * @var \HtmlElement[]
+     * @var HtmlElement[]
      */
     protected array $elements = [];
 
@@ -21,8 +19,8 @@ class Form extends HtmlElement{
         $this->elements[] = $el;
     }
 
-    public function render():string {
-        $content = array_map(fn($el) => $el->render(), $this->elements);
-        return sprintf(`<form action="$this->action" method="$this->method">%s</form>`, $this->content);
+    public function render(): string {
+        $content = implode("", array_map(fn($el) => $el->render(), $this->elements));
+        return sprintf('<form action="%s" method="%s">%s</form>', $this->action, $this->method, $content);
     }
 }
